@@ -1,0 +1,44 @@
+.app-frame{
+  min-height: 100%;
+}
+a{
+  user-select: none;
+  font-size: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.main-container {
+  max-height: 35px;
+}
+
+.underline-animation {
+  position: relative;
+}
+
+.underline-animation::after {
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: #fff;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+.underline-animation:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+.toggle-theme {
+  margin-top: 15px;
+}
+
+.header-nav {
+  margin-right: 20px;
+}
