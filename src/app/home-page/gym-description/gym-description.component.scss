@@ -1,6 +1,6 @@
 .main-content {
   height: 100%;
-  margin: 100px auto auto auto;
+  margin: 70px auto auto auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -53,5 +53,10 @@ h2 {
   font-family: myFirstFont;
   font-size: 50px;
   margin-bottom: 50px;
+}
+
+.money {
+  vertical-align: bottom;
+  padding-bottom: 5px;
 }
 

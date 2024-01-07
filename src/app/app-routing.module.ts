@@ -1,11 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { GymDescriptionComponent} from "./home-page/gym-description/gym-description.component";
 
 const routes: Routes = [
   {
-    path: '',
-    component: GymDescriptionComponent
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module')
+      .then(m => m.AuthModule),
+    // canActivate: [ProtectAuthGuard],
+    // canActivateChild: [ProtectAuthGuard]
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./home-page/home-page.module')
+      .then(m => m.HomePageModule),
+    // canActivate: [ProtectAuthGuard],
+    // canActivateChild: [ProtectAuthGuard]
   },
 ];
 

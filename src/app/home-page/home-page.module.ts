@@ -1,20 +1,24 @@
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { GymDescriptionComponent } from './gym-description/gym-description.component';
-import { AppModule } from '../app.module';
 import { MatIconModule } from "@angular/material/icon";
+
+const routes: Routes = [
+  {
+    path: '',
+    component: GymDescriptionComponent
+  }
+]
 
 @NgModule({
   declarations: [
-    GymDescriptionComponent
+    GymDescriptionComponent,
   ],
   imports: [
     CommonModule,
-    AppModule,
     MatIconModule,
+    RouterModule.forChild(routes),
   ],
-  exports: [
-    GymDescriptionComponent
-  ]
 })
 export class HomePageModule { }

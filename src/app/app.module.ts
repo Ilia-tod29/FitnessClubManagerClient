@@ -9,12 +9,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
-import { GymDescriptionComponent } from "./home-page/gym-description/gym-description.component";
+import { HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
     AppComponent,
-    GymDescriptionComponent
   ],
   imports: [
     BrowserModule,
@@ -25,6 +24,7 @@ import { GymDescriptionComponent } from "./home-page/gym-description/gym-descrip
     MatIconModule,
     MatToolbarModule,
     MatButtonModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
