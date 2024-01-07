@@ -1,0 +1,57 @@
+.main-content {
+  height: 100%;
+  margin: 100px auto auto auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.centered-div {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  text-align: center;
+  position: relative;
+  background-color: rgba(166, 166, 166, 0.72);
+  padding: 20px;
+}
+
+.description {
+  margin-top: 50px;
+  width: 80%;
+  align-self: center;
+}
+
+.white-line {
+  border: none;
+  height: 1px;
+  background-color: #ffffff;
+  align-self: center;
+}
+
+.top-bottom {
+  width: 60%;
+}
+
+.between-paragraphs {
+  width: 20%;
+  margin: 20px auto 20px auto;
+}
+
+@font-face {
+  font-family: myFirstFont;
+  src: url(../../../fonts/simplifica.ttf);
+}
+
+p {
+  font-family: myFirstFont;
+  font-size: 25px;
+  line-height: 30px;
+}
+
+h2 {
+  font-family: myFirstFont;
+  font-size: 50px;
+  margin-bottom: 50px;
+}
+

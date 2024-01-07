@@ -30,15 +30,53 @@ a{
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
   width: 0;
 }
+
 .underline-animation:hover::after {
   width: 100%;
   left: 0;
 }
 
-.toggle-theme {
-  margin-top: 15px;
+.mat-toolbar {
+  background-color: rgba(0, 55, 77, 0.9); /* Replace with your custom color code */
 }
 
-.header-nav {
-  margin-right: 20px;
+.in-light-mode {
+  color: white;
+}
+
+.logo-link {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: auto; /* Pushes the links to the right */
+  margin-left: 10px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 8px 12px;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: white;
+  transition: width 0.3s ease-out, left 0.3s ease-out;
+}
+
+.nav-link:hover::after {
+  left: 0;
+  width: 100%;
 }

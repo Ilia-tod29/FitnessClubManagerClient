@@ -1,30 +1,26 @@
 <div class="app-frame mat-app-background" [ngClass]="isDarkTheme ? 'dark-theme' : 'light-theme'">
   <div class="main-container">
-    <header class="header header-6">
-      <div class="branding">
-        <a routerLink="/">
-          <span class="title">Image Analyser</span>
-        </a>
-      </div>
-      <div class="header-nav">
-        <a routerLink="" class="nav-link underline-animation">
-          <span>Analyser</span>
-        </a>
-        <a routerLink="/gallery" class="nav-link underline-animation">
-          <span class="analyser">Gallery</span>
-        </a>
-        <a id="not-needed" href="#"></a>
-        <mat-slide-toggle class="toggle-theme"
-                          [(ngModel)]="isDarkTheme"
+    <mat-toolbar>
+      <mat-icon aria-label="Weight" class="in-light-mode">fitness_center</mat-icon>
+      <a routerLink="/" class="logo-link">Fitness Club Manager</a>
+
+      <!-- Right side links with underline animation -->
+      <span class="nav-links">
+        <a routerLink="/gallery" mat-button class="nav-link">Gallery</a>
+        <a routerLink="/users" mat-button class="nav-link">Users</a>
+        <a routerLink="/subscriptions" mat-button class="nav-link">Subscriptions</a>
+        <a routerLink="/inventory" mat-button class="nav-link">Inventory</a>
+        <mat-slide-toggle [(ngModel)]="isDarkTheme"
                           (click)="toddleTheme()">
-<!--          <ng-icon *ngIf="isDarkTheme" name="bootstrapSun"></ng-icon>-->
-<!--          <ng-icon *ngIf="!isDarkTheme" name="bootstrapSunFill"></ng-icon>-->
-        </mat-slide-toggle>
-      </div>
-    </header>
+        <mat-icon *ngIf="isDarkTheme">nights_stay</mat-icon>
+        <mat-icon *ngIf="!isDarkTheme" class="in-light-mode">wb_sunny</mat-icon>
+      </mat-slide-toggle>
+      </span>
+    </mat-toolbar>
   </div>
 
   <main>
     <router-outlet></router-outlet>
   </main>
 </div>
+
