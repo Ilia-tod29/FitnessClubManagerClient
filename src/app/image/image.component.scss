@@ -1,0 +1,18 @@
+.image-wrapper img {
+  max-width: 350px;
+  max-height: 350px;
+  padding: 20px 20px 20px;
+}
+
+.image-wrapper {
+  width: 350px;
+  height: 350px;
+  margin: 10px 10px 10px 10px;
+  display: flex;
+  justify-content: center;
+}
+.image-wrapper:hover {
+  opacity: 0.5;
+  transition: 0.5s;
+  cursor: pointer;
+}

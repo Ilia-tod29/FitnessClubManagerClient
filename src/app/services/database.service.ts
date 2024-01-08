@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { UrlsConfig } from "../conficuration/url-config";
 import { UserDTO } from "../models/userDTO";
 import { SubscriptionDTO } from "../models/subscriptionDTO";
@@ -11,7 +11,14 @@ import * as Types from "../models/types";
   providedIn: 'root'
 })
 export class DatabaseService {
-  constructor(private httpClient: HttpClient) { }
+  headers: HttpHeaders | undefined;
+  constructor(private httpClient: HttpClient) {
+    const accessToken = localStorage.getItem('accessToken');
+    this.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`,
+    });
+  }
 
   // Users
   getAllUsers() {
@@ -43,7 +50,7 @@ export class DatabaseService {
 
   // Inventory items
   createInventoryItem(req: Types.createOrUpdateInventoryItem) {
-    return this.httpClient.post<InventoryItemDTO>(UrlsConfig.INVENTORY_ITEMS_ENDPOINT, req)
+    return this.httpClient.post<InventoryItemDTO>(UrlsConfig.INVENTORY_ITEMS_ENDPOINT, req, { headers: this.headers })
   }
   getAllInventoryItems() {
     return this.httpClient.get<InventoryItemDTO[]>(UrlsConfig.GET_ALL_INVENTORY_ITEMS_ENDPOINT);
@@ -60,18 +67,18 @@ export class DatabaseService {
 
   // Gallery
   createGalleryItem(req: Types.createOrUpdateGalleryItem) {
-    return this.httpClient.post<GalleryItemDTO>(UrlsConfig.GALLERY_ENDPOINT, req)
+    return this.httpClient.post<GalleryItemDTO>(UrlsConfig.GALLERY_ENDPOINT, req, { headers: this.headers })
   }
   getAllGalleryItems() {
-    return this.httpClient.get<UserDTO[]>(UrlsConfig.GET_ALL_GALLERY_ITEMS_ENDPOINT);
+    return this.httpClient.get<GalleryItemDTO[]>(UrlsConfig.GET_ALL_GALLERY_ITEMS_ENDPOINT);
   }
   getGalleryItem(id: number) {
-    return this.httpClient.get<UserDTO>(`${UrlsConfig.GALLERY_ENDPOINT}/${id}`);
+    return this.httpClient.get<GalleryItemDTO>(`${UrlsConfig.GALLERY_ENDPOINT}/${id}`);
   }
   updateGalleryItem(req: Types.createOrUpdateGalleryItem) {
-    return this.httpClient.put<UserDTO>(UrlsConfig.GALLERY_ENDPOINT, req);
+    return this.httpClient.put<GalleryItemDTO>(UrlsConfig.GALLERY_ENDPOINT, req);
   }
   deleteGalleryItem(id: number) {
-    return this.httpClient.delete<UserDTO>(`${UrlsConfig.GALLERY_ENDPOINT}/${id}`);
+    return this.httpClient.delete<GalleryItemDTO>(`${UrlsConfig.GALLERY_ENDPOINT}/${id}`);
   }
 }

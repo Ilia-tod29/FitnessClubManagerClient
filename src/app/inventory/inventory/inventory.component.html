@@ -1,0 +1,22 @@
+<div class="gallery-wrapper">
+  <div class="gallery">
+    <label class="section-heading">Inventory</label>
+
+    <div class="drop-zone">
+      <div class="input">
+        <input type="email" id="inventory-item" class="input-field" name="email" placeholder=" " required/>
+        <label class="input-label" for="inventory-item">Enter the inventory item name:</label>
+      </div>
+      <app-uploader></app-uploader>
+    </div>
+
+    <div class="image-area">
+      <gallery-image
+        *ngFor="let image of images"
+        [image]="image"
+        class="single-image"
+      ></gallery-image>
+    </div>
+  </div>
+  <hr>
+</div>

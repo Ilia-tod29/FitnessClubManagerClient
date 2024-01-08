@@ -16,6 +16,20 @@ const routes: Routes = [
     // canActivate: [ProtectAuthGuard],
     // canActivateChild: [ProtectAuthGuard]
   },
+  {
+    path: 'gallery',
+    loadChildren: () => import('./gallery/gallery.module')
+      .then(m => m.GalleryModule),
+    // canActivate: [ProtectAuthGuard],
+    // canActivateChild: [ProtectAuthGuard]
+  },
+  {
+    path: 'inventory',
+    loadChildren: () => import('./inventory/inventory.module')
+      .then(m => m.InventoryModule),
+    // canActivate: [ProtectAuthGuard],
+    // canActivateChild: [ProtectAuthGuard]
+  },
 ];
 
 @NgModule({

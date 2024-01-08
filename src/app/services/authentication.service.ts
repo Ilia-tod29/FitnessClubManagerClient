@@ -17,6 +17,8 @@ export class AuthenticationService {
     // @ts-ignore
     localStorage.setItem('currentUser', response['user']['email']);
     // @ts-ignore
+    localStorage.setItem('userRole', response['user']['role']);
+    // @ts-ignore
     localStorage.setItem('accessToken', response['access_token']);
   }
 

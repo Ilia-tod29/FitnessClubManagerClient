@@ -1,0 +1,18 @@
+<div class="gallery-wrapper">
+  <div class="gallery">
+    <label class="section-heading">Image Gallery</label>
+
+    <div class="drop-zone">
+      <app-uploader></app-uploader>
+    </div>
+
+    <div class="image-area">
+      <gallery-image
+        *ngFor="let image of images"
+        [image]="image"
+        class="single-image"
+      ></gallery-image>
+    </div>
+  </div>
+  <hr>
+</div>

@@ -1,0 +1,25 @@
+<div class="main-content">
+  <ngx-dropzone
+    class="drop-zone"
+    (change)="onFileChanged($event)"
+    [accept]="'image/*'">
+    <ngx-dropzone-label>Drop image here! <br> or <br> Click here to select image!</ngx-dropzone-label>
+    <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+      <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+    </ngx-dropzone-preview>
+  </ngx-dropzone>
+  <div class="visualize-btns">
+    <button class="visualize-btn"
+            type="button"
+            (click)="uploadImage()"
+            *ngIf="shouldVisualizeBtns">
+      Upload
+    </button>
+    <button class="visualize-btn"
+            type="button"
+            (click)="clearImage()"
+            *ngIf="shouldVisualizeBtns">
+      Clear
+    </button>
+  </div>
+</div>
