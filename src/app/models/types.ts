@@ -4,6 +4,7 @@ export type authParams = {
 }
 
 export type updateUserParams = {
+  id: number
   suspended: string;
 }
 

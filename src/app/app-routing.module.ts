@@ -30,6 +30,13 @@ const routes: Routes = [
     // canActivate: [ProtectAuthGuard],
     // canActivateChild: [ProtectAuthGuard]
   },
+  {
+    path: 'users',
+    loadChildren: () => import('./users/users.module')
+      .then(m => m.UsersModule),
+    // canActivate: [ProtectAuthGuard],
+    // canActivateChild: [ProtectAuthGuard]
+  },
 ];
 
 @NgModule({

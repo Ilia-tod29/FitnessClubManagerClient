@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { Router } from "@angular/router";
 import { InventoryItemDTO } from "../models/inventoryItemDTO";
 import { DatabaseService } from "../services/database.service";
 import { AlertService } from "../services/alert.service";
@@ -13,8 +12,7 @@ export class ImageComponent {
   @Input() image!: InventoryItemDTO;
   shouldShow = false;
 
-  constructor(private router: Router,
-              private databaseService: DatabaseService,
+  constructor(private databaseService: DatabaseService,
               private alertService: AlertService
   ) {}
 
@@ -31,7 +29,7 @@ export class ImageComponent {
       if (confirmed) {
         if (this.image.name == undefined) {
           this.databaseService.deleteGalleryItem(this.image.id!).subscribe(res => {
-              this.alertService.showAlertWithRefresh(`Gallery item: ${res.image} created successfully deleted`)
+              this.alertService.showAlertWithRefresh(`Gallery item: ${res.image} successfully deleted`)
             },
             error => {
               this.alertService.showAlert(error.statusText);

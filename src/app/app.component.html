@@ -12,9 +12,9 @@
         <a routerLink="/inventory" mat-button class="nav-link">Inventory</a>
         <mat-slide-toggle [(ngModel)]="isDarkTheme"
                           (click)="toddleTheme()">
-        <mat-icon *ngIf="isDarkTheme">nights_stay</mat-icon>
-        <mat-icon *ngIf="!isDarkTheme" class="in-light-mode">wb_sunny</mat-icon>
-      </mat-slide-toggle>
+          <mat-icon *ngIf="isDarkTheme">nights_stay</mat-icon>
+          <mat-icon *ngIf="!isDarkTheme" class="in-light-mode">wb_sunny</mat-icon>
+        </mat-slide-toggle>
       </span>
     </mat-toolbar>
   </div>

@@ -1,0 +1,12 @@
+<div class="user-row">
+  <span class="row-heading">{{ user.email }}</span>
+  <span class="row-heading">{{ this.hasActiveSubscription }}</span>
+  <div class="row-heading">
+    <mat-slide-toggle (click)="toggleSuspension()"
+                      [(ngModel)]="this.isCurrentUserSuspended"
+                      class="toggle">
+      {{ this.isCurrentUserSuspended ? 'Yes' : 'No' }}
+    </mat-slide-toggle>
+  </div>
+  <mat-icon (click)="deleteUser()" class="row-heading">delete</mat-icon>
+</div>

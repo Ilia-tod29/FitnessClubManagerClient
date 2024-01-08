@@ -1,0 +1,22 @@
+.user-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+}
+
+mat-icon {
+  cursor: pointer;
+  color: red;
+}
+
+.row-heading {
+  width: 25%;
+  display: flex;
+  justify-content: center;
+}
+
+toggle{
+  margin-right: 47%;
+}

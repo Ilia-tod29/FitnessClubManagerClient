@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from "../../services/database.service";
 import { GalleryItemDTO } from "../../models/galleryItemDTO";
 import { InventoryItemDTO } from "../../models/inventoryItemDTO";
+import { AlertService } from "../../services/alert.service";
 
 
 @Component({
@@ -19,11 +20,15 @@ export class ImageContainerComponent implements OnInit{
   //   );
 
   images: InventoryItemDTO[] = [];
-  constructor(private databaseService: DatabaseService) {}
+  constructor(private databaseService: DatabaseService,
+              private alertService: AlertService) {}
 
   ngOnInit() {
     this.databaseService.getAllGalleryItems().subscribe(res => {
       this.mapImages(res);
+    },
+    () => {
+      this.alertService.showAlert("Unable to load images");
     })
   }
 

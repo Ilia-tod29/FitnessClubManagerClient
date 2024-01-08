@@ -28,7 +28,7 @@ export class DatabaseService {
     return this.httpClient.get<UserDTO>(`${UrlsConfig.USERS_ENDPOINT}/${id}`, { headers: this.headers });
   }
   updateUser(req: Types.updateUserParams) {
-    return this.httpClient.put<UserDTO>(UrlsConfig.USERS_ENDPOINT, req, { headers: this.headers });
+    return this.httpClient.put<UserDTO>(`${UrlsConfig.USERS_ENDPOINT}/${req.id}`, req, { headers: this.headers });
   }
   deleteUser(id: number) {
     return this.httpClient.delete<UserDTO>(`${UrlsConfig.USERS_ENDPOINT}/${id}`, { headers: this.headers });
@@ -41,8 +41,8 @@ export class DatabaseService {
   getSubscription(id: number) {
     return this.httpClient.get<SubscriptionDTO>(`${UrlsConfig.SUBSCRIPTIONS_ENDPOINT}/${id}`, { headers: this.headers });
   }
-  getSubscriptionForAGivenUser(email: string) {
-    return this.httpClient.get<SubscriptionDTO[]>(`${UrlsConfig.SUBSCRIPTIONS_ENDPOINT}/${email}`, { headers: this.headers });
+  getSubscriptionForAGivenUser(id: number) {
+    return this.httpClient.get<SubscriptionDTO[]>(`${UrlsConfig.GET_SUBSCRIPTIONS_BY_USER_ENDPOINT}/${id}`, { headers: this.headers });
   }
   deleteSubscription(id: number) {
     return this.httpClient.delete<SubscriptionDTO>(`${UrlsConfig.SUBSCRIPTIONS_ENDPOINT}/${id}`, { headers: this.headers });

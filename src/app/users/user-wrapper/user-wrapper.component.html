@@ -1,0 +1,9 @@
+<div class="main-content">
+  <div class="user-row">
+    <span class="row-heading">Email</span>
+    <span class="row-heading">Has active subscription</span>
+    <span class="row-heading">Suspended</span>
+    <span class="row-heading">Delete user</span>
+  </div>
+  <app-user *ngFor="let user of users" [user]="user"></app-user>
+</div>

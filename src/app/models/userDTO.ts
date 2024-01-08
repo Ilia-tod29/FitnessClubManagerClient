@@ -1,7 +1,9 @@
 export class UserDTO {
-  id: number | undefined;
-  email: string | undefined;
-  role: string | undefined;
-  suspended: boolean | undefined;
-  created_at: string | undefined;
+  constructor(
+    public id?: number,
+    public email?: string,
+    public role?: string,
+    public suspended?: boolean,
+    public created_at?: string
+  ) {}
 }
