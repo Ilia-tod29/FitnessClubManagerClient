@@ -3,7 +3,8 @@ import { AuthenticationService } from "../services/authentication.service";
 import { DatabaseService } from "../services/database.service";
 import { Router } from "@angular/router";
 import { createOrUpdateGalleryItem, createOrUpdateInventoryItem } from "../models/types";
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { RoutesConfig } from "../conficuration/routes";
+import { AlertService } from "../services/alert.service";
 
 @Component({
   selector: 'app-uploader',
@@ -21,8 +22,8 @@ export class UploaderComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private databaseService: DatabaseService,
     private router: Router,
-    private snackBar: MatSnackBar
-  ) { }
+    private alertService: AlertService,
+  ) {}
 
   ngOnInit(): void {
     this.currentUser = localStorage.getItem('currentUser')
@@ -31,7 +32,7 @@ export class UploaderComponent implements OnInit {
   onFileChanged(fileInput: any): void {
     const fileReader = new FileReader();
     if (fileInput.addedFiles.length > 1 || this.files.length == 1) {
-      this.showAlert("Only one file is allowed!");
+      this.alertService.showAlert("Only one file is allowed!");
       return;
     }
     this.shouldVisualizeBtns = true;
@@ -43,11 +44,12 @@ export class UploaderComponent implements OnInit {
         this.imageName = currentFile['name'];
         this.files.push(currentFile);
       } else {
-        this.showAlert("The file is null");
+        this.alertService.showAlert("The file is null");
         return;
       }
     }
     fileReader.onerror = (error) => {
+      this.alertService.showAlert("Could not read the file");
       console.log(error);
     }
 
@@ -61,26 +63,32 @@ export class UploaderComponent implements OnInit {
   }
 
   onUpload(): void {
-    const currentUserRole = localStorage.getItem('userRole');
-    if (currentUserRole == "admin") {
-      if (this.InventoryName == undefined || this.InventoryName == "") {
-        console.log("posting...")
+    console.log(this.InventoryName)
+    if (this.InventoryName == undefined || this.InventoryName == "") {
+      if (this.router.url == `/${RoutesConfig.Inventory}`) {
+        this.alertService.showAlert("Inventory name must be filled!")
+        return
+      }
         const galleryItem: createOrUpdateGalleryItem = {
-          image: this.imageName
-        }
-        this.databaseService.createGalleryItem(galleryItem).subscribe(res => {
-          this.showAlert(`Image ${res.image} created successfully at: ${res.created_at}`)
+        image: this.imageName
+      }
+      this.databaseService.createGalleryItem(galleryItem).subscribe(res => {
+        this.alertService.showAlertWithRefresh(`Image: ${res.image} created successfully at: ${res.created_at}`)
+      },
+      error => {
+        this.alertService.showAlert(error.statusText);
+      })
+    } else {
+      const inventoryItem: createOrUpdateInventoryItem = {
+        name: this.InventoryName,
+        image: this.imageName,
+      }
+      this.databaseService.createInventoryItem(inventoryItem).subscribe(res => {
+          this.alertService.showAlertWithRefresh(`Inventory item: ${res.name} created successfully at: ${res.created_at}`)
         },
         error => {
-          this.showAlert(error.statusText);
+          this.alertService.showAlert(error.statusText);
         })
-      } else {
-        const inventoryItem: createOrUpdateInventoryItem = {
-          name: this.InventoryName,
-          image: this.imageName,
-        }
-        this.databaseService.createInventoryItem(inventoryItem)
-      }
     }
   }
 
@@ -102,12 +110,5 @@ export class UploaderComponent implements OnInit {
     this.files = [];
     this.imageName = "";
     this.shouldVisualizeBtns = false;
-  }
-
-  showAlert(message: string): void {
-    this.snackBar.open(message, 'Close', {
-      duration: 5000,
-      panelClass: ['info-snackbar'],
-    });
   }
 }

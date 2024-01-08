@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ImageComponent} from "./image.component";
+import { MatIconModule } from "@angular/material/icon";
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { ImageComponent} from "./image.component";
     ImageComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatIconModule
   ]
 })
 export class ImageModule { }

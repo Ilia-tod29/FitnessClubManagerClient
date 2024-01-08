@@ -1,22 +1,50 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { GalleryItemDTO } from "../models/galleryItemDTO";
+import { Component, Input } from '@angular/core';
 import { Router } from "@angular/router";
+import { InventoryItemDTO } from "../models/inventoryItemDTO";
+import { DatabaseService } from "../services/database.service";
+import { AlertService } from "../services/alert.service";
 
 @Component({
   selector: 'gallery-image',
   templateUrl: './image.component.html',
   styleUrls: ['./image.component.scss']
 })
-export class ImageComponent implements OnInit {
-  @Input() image!: GalleryItemDTO;
+export class ImageComponent {
+  @Input() image!: InventoryItemDTO;
+  shouldShow = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,
+              private databaseService: DatabaseService,
+              private alertService: AlertService
+  ) {}
 
-  ngOnInit(): void {
-    console.log(this.image)
+  onMouseEnter(): void {
+    this.shouldShow = true;
   }
 
-  public openImage(): void {
-    this.router.navigate([`/gallery/${this.image.id}`]);
+  onMouseLeave(): void {
+    this.shouldShow = false;
+  }
+
+  deleteImage(): void {
+    this.alertService.confirmAlert("Are you sure you want to delete this image?").subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        if (this.image.name == undefined) {
+          this.databaseService.deleteGalleryItem(this.image.id!).subscribe(res => {
+              this.alertService.showAlertWithRefresh(`Gallery item: ${res.image} created successfully deleted`)
+            },
+            error => {
+              this.alertService.showAlert(error.statusText);
+            })
+        } else {
+          this.databaseService.deleteInventoryItem(this.image.id!).subscribe(res => {
+              this.alertService.showAlertWithRefresh(`Inventory item: ${res.name} successfully deleted`)
+            },
+            error => {
+              this.alertService.showAlert(error.statusText);
+            })
+        }
+      }
+    });
   }
 }

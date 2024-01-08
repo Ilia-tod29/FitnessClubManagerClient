@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from "../../services/database.service";
 import { GalleryItemDTO } from "../../models/galleryItemDTO";
+import { InventoryItemDTO } from "../../models/inventoryItemDTO";
 
 
 @Component({
@@ -17,12 +18,18 @@ export class ImageContainerComponent implements OnInit{
   //     })
   //   );
 
-  images: GalleryItemDTO[] = []
+  images: InventoryItemDTO[] = [];
   constructor(private databaseService: DatabaseService) {}
 
   ngOnInit() {
     this.databaseService.getAllGalleryItems().subscribe(res => {
-      this.images = res
+      this.mapImages(res);
+    })
+  }
+
+  mapImages(galleryImages: GalleryItemDTO[]): void {
+    this.images = galleryImages.map(image => {
+      return new InventoryItemDTO(image.id, undefined, image.image, image.created_at)
     })
   }
 }

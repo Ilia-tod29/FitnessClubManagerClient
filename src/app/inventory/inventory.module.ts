@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { InventoryComponent } from './inventory/inventory.component';
 import { ImageModule } from "../image/image.module";
 import { UploaderModule } from "../uploader/uploader.module";
+import { FormsModule } from "@angular/forms";
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ImageModule,
     UploaderModule,
+    FormsModule,
   ]
 })
 export class InventoryModule { }

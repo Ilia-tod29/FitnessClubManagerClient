@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UploaderComponent } from "./uploader.component";
 import { NgxDropzoneModule } from "ngx-dropzone";
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -14,7 +13,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   imports: [
     CommonModule,
     NgxDropzoneModule,
-    MatSnackBarModule
   ]
 })
 export class UploaderModule { }

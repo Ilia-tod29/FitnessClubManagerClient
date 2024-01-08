@@ -4,10 +4,10 @@
 
     <div class="drop-zone">
       <div class="input">
-        <input type="email" id="inventory-item" class="input-field" name="email" placeholder=" " required/>
+        <input type="email" id="inventory-item" class="input-field" name="email" placeholder=" " required   [(ngModel)]="inventoryItemName"/>
         <label class="input-label" for="inventory-item">Enter the inventory item name:</label>
       </div>
-      <app-uploader></app-uploader>
+      <app-uploader [InventoryName]="inventoryItemName"></app-uploader>
     </div>
 
     <div class="image-area">

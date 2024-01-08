@@ -1,5 +1,7 @@
 export class GalleryItemDTO {
-  id: number | undefined;
-  image: string | undefined;
-  created_at: string | undefined;
+  constructor(
+    public id?: number,
+    public image?: string,
+    public created_at?: string
+  ) {}
 }

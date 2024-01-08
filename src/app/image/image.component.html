@@ -1,4 +1,8 @@
-<div (click)="openImage()"
+<div (mouseenter)="onMouseEnter()"
+     (mouseleave)="onMouseLeave()"
      class="image-wrapper">
+  <mat-icon *ngIf="shouldShow"
+            (click)="deleteImage()"
+            class="delete-image">delete</mat-icon>
   <img src="../../../../assets/images/{{this.image.image}}" alt="Unable to load image">
 </div>

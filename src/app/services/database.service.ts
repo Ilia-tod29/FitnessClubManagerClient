@@ -22,30 +22,30 @@ export class DatabaseService {
 
   // Users
   getAllUsers() {
-    return this.httpClient.get<UserDTO[]>(UrlsConfig.GET_ALL_USERS_ENDPOINT);
+    return this.httpClient.get<UserDTO[]>(UrlsConfig.GET_ALL_USERS_ENDPOINT, { headers: this.headers });
   }
   getUser(id: number) {
-    return this.httpClient.get<UserDTO>(`${UrlsConfig.USERS_ENDPOINT}/${id}`);
+    return this.httpClient.get<UserDTO>(`${UrlsConfig.USERS_ENDPOINT}/${id}`, { headers: this.headers });
   }
   updateUser(req: Types.updateUserParams) {
-    return this.httpClient.put<UserDTO>(UrlsConfig.USERS_ENDPOINT, req);
+    return this.httpClient.put<UserDTO>(UrlsConfig.USERS_ENDPOINT, req, { headers: this.headers });
   }
   deleteUser(id: number) {
-    return this.httpClient.delete<UserDTO>(`${UrlsConfig.USERS_ENDPOINT}/${id}`);
+    return this.httpClient.delete<UserDTO>(`${UrlsConfig.USERS_ENDPOINT}/${id}`, { headers: this.headers });
   }
 
   // Subscriptions
   getAllSubscriptions() {
-    return this.httpClient.get<SubscriptionDTO[]>(UrlsConfig.GET_ALL_SUBSCRIPTIONS_ENDPOINT);
+    return this.httpClient.get<SubscriptionDTO[]>(UrlsConfig.GET_ALL_SUBSCRIPTIONS_ENDPOINT, { headers: this.headers });
   }
   getSubscription(id: number) {
-    return this.httpClient.get<SubscriptionDTO>(`${UrlsConfig.SUBSCRIPTIONS_ENDPOINT}/${id}`);
+    return this.httpClient.get<SubscriptionDTO>(`${UrlsConfig.SUBSCRIPTIONS_ENDPOINT}/${id}`, { headers: this.headers });
   }
   getSubscriptionForAGivenUser(email: string) {
-    return this.httpClient.get<SubscriptionDTO[]>(`${UrlsConfig.SUBSCRIPTIONS_ENDPOINT}/${email}`);
+    return this.httpClient.get<SubscriptionDTO[]>(`${UrlsConfig.SUBSCRIPTIONS_ENDPOINT}/${email}`, { headers: this.headers });
   }
   deleteSubscription(id: number) {
-    return this.httpClient.delete<SubscriptionDTO>(`${UrlsConfig.SUBSCRIPTIONS_ENDPOINT}/${id}`);
+    return this.httpClient.delete<SubscriptionDTO>(`${UrlsConfig.SUBSCRIPTIONS_ENDPOINT}/${id}`, { headers: this.headers });
   }
 
   // Inventory items
@@ -59,10 +59,10 @@ export class DatabaseService {
     return this.httpClient.get<InventoryItemDTO>(`${UrlsConfig.INVENTORY_ITEMS_ENDPOINT}/${id}`);
   }
   updateInventoryItem(req: Types.createOrUpdateInventoryItem) {
-    return this.httpClient.put<InventoryItemDTO>(UrlsConfig.INVENTORY_ITEMS_ENDPOINT, req);
+    return this.httpClient.put<InventoryItemDTO>(UrlsConfig.INVENTORY_ITEMS_ENDPOINT, req, { headers: this.headers });
   }
   deleteInventoryItem(id: number) {
-    return this.httpClient.delete<InventoryItemDTO>(`${UrlsConfig.INVENTORY_ITEMS_ENDPOINT}/${id}`);
+    return this.httpClient.delete<InventoryItemDTO>(`${UrlsConfig.INVENTORY_ITEMS_ENDPOINT}/${id}`, { headers: this.headers });
   }
 
   // Gallery
@@ -76,9 +76,9 @@ export class DatabaseService {
     return this.httpClient.get<GalleryItemDTO>(`${UrlsConfig.GALLERY_ENDPOINT}/${id}`);
   }
   updateGalleryItem(req: Types.createOrUpdateGalleryItem) {
-    return this.httpClient.put<GalleryItemDTO>(UrlsConfig.GALLERY_ENDPOINT, req);
+    return this.httpClient.put<GalleryItemDTO>(UrlsConfig.GALLERY_ENDPOINT, req, { headers: this.headers });
   }
   deleteGalleryItem(id: number) {
-    return this.httpClient.delete<GalleryItemDTO>(`${UrlsConfig.GALLERY_ENDPOINT}/${id}`);
+    return this.httpClient.delete<GalleryItemDTO>(`${UrlsConfig.GALLERY_ENDPOINT}/${id}`, { headers: this.headers });
   }
 }
