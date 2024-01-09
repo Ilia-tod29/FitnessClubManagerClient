@@ -19,22 +19,10 @@ const routes: Routes = [
   }
 ]
 
-export const EUROPEAN_DATE_FORMAT = {
-  parse: {
-    dateInput: { day: 'numeric', month: 'numeric', year: 'numeric' },
-  },
-  display: {
-    dateInput: 'input',
-    monthYearLabel: { year: 'numeric', month: 'numeric' },
-    dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric' },
-    monthYearA11yLabel: { year: 'numeric', month: 'long' },
-  },
-};
-
 @NgModule({
   declarations: [
     SubscriptionComponent,
-    SubsctiptionsWrapperComponent
+    SubsctiptionsWrapperComponent,
   ],
   imports: [
     CommonModule,
@@ -46,9 +34,6 @@ export const EUROPEAN_DATE_FORMAT = {
     MatInputModule,
     MatNativeDateModule,
     MatButtonModule,
-  ],
-  providers: [
-    { provide: EUROPEAN_DATE_FORMAT, useValue: EUROPEAN_DATE_FORMAT }
-  ],
+  ]
 })
 export class SubscriptionsModule { }

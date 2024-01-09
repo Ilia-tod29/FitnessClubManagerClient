@@ -28,7 +28,7 @@
 .subscription-form {
   display: flex;
   flex-direction: column;
-  width: 40%;
+  width: 30%;
 }
 
 .pay-btn {
@@ -39,4 +39,16 @@
 
 .error{
   color: red;
+}
+
+.form-title{
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+
+hr {
+  width: 100%;
+  margin: 50px 0 0 0;
+  color: #ccc;;
 }

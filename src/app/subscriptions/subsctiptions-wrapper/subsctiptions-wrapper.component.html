@@ -1,5 +1,6 @@
 <div class="main-content">
   <form [formGroup]="payForm" class="subscription-form">
+    <h1 class="form-title">New monthly subscription</h1>
     <mat-form-field>
       <mat-label>Start date</mat-label>
       <input matInput [matDatepicker]="startDatePicker" formControlName="startDate">
@@ -13,8 +14,10 @@
       </mat-error>
     </mat-form-field>
 
-    <button mat-raised-button class="pay-btn" [disabled]="payForm.invalid" (click)="pay()">Pay Now</button>
+    <button mat-raised-button class="pay-btn" [disabled]="payForm.invalid" (click)="pay()">Pay 50 BGN</button>
   </form>
+
+  <hr>
 
   <div class="subscription-list">
     <div class="user-row">
@@ -22,7 +25,7 @@
       <span class="row-heading">Start date</span>
       <span class="row-heading">End date</span>
       <span class="row-heading">Valid</span>
-      <span class="row-heading">Delete subscription</span>
+      <span *ngIf="this.authenticatedUserRole == this.adminRole" class="row-heading">Delete subscription</span>
     </div>
     <app-subscription *ngFor="let subscription of this.subscriptions" [subscription]="subscription"></app-subscription>
   </div>

@@ -29,15 +29,23 @@ export class SubscriptionComponent implements OnInit {
 
     if (startDate != null && endDate != null && (today >= startDate && today <= endDate)) {
       this.isValidSubscription = true;
+      console.log(this.isValidSubscription)
     }
 
-    this.databaseService.getUser(this.subscription.user_id!).subscribe(res => {
-      this.user = res;
-    },
-    () => {
-      this.alertService.showAlert("Subscription's owner not found.");
-      this.user = new UserDTO(-1, "UserNotFound");
-    })
+    if (this.authenticatedUserRole == Utils.AdminRole){
+      this.databaseService.getUser(this.subscription.user_id!).subscribe(res => {
+          this.user = res;
+        },
+        () => {
+          this.alertService.showAlert("Subscription's owner not found.");
+          this.user = new UserDTO(-1, "UserNotFound");
+        })
+    } else {
+      const authenticatedUserID = localStorage.getItem("userRole")!;
+      const authenticatedUserEmail = localStorage.getItem("currentUser")!;
+      this.user = new UserDTO(+authenticatedUserID, authenticatedUserEmail, this.authenticatedUserRole);
+    }
+
   }
 
   deleteSubscription(): void {

@@ -4,7 +4,7 @@ export type authParams = {
 }
 
 export type updateUserParams = {
-  id: number
+  id: number;
   suspended: string;
 }
 
@@ -15,4 +15,9 @@ export type createOrUpdateInventoryItem = {
 
 export type createOrUpdateGalleryItem = {
   image: string;
+}
+
+export type createCheckoutSessionParams = {
+  start_date: string;
+  end_date: string;
 }

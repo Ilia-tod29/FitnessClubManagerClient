@@ -54,9 +54,9 @@ export class AlertService {
     const parts = date.split("-");
 
     if (parts.length === 3) {
-      const day = parseInt(parts[0], 10);
+      const day = parseInt(parts[2], 10);
       const month = parseInt(parts[1], 10) - 1; // Months in JavaScript are zero-based
-      const year = parseInt(parts[2], 10);
+      const year = parseInt(parts[0], 10);
 
       return new Date(year, month, day);
     }
