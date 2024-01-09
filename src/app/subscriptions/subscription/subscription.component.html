@@ -1,0 +1,12 @@
+<div class="main-content">
+  <div class="pay-button"></div>
+
+  <div class="user-row">
+    <span class="row-heading">{{ this.user?.email }}</span>
+    <span class="row-heading">{{ this.subscription.start_date }}</span>
+    <span class="row-heading">{{ this.subscription.end_date }}</span>
+    <mat-icon *ngIf="this.isValidSubscription" class="row-heading">done</mat-icon>
+    <mat-icon *ngIf="!this.isValidSubscription" class="row-heading red-color">close</mat-icon>
+    <mat-icon *ngIf="this.authenticatedUserRole == this.adminRole" (click)="deleteSubscription()" class="row-heading red-color delete">delete</mat-icon>
+  </div>
+</div>

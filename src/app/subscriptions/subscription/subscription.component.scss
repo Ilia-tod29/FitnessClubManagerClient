@@ -1,0 +1,25 @@
+.user-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+}
+
+.delete {
+  cursor: pointer;
+}
+
+.red-color {
+  color: red;
+}
+
+.green-color {
+  color: #14c414;
+}
+
+.row-heading {
+  width: 25%;
+  display: flex;
+  justify-content: center;
+}

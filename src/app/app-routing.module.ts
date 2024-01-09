@@ -37,6 +37,13 @@ const routes: Routes = [
     // canActivate: [ProtectAuthGuard],
     // canActivateChild: [ProtectAuthGuard]
   },
+  {
+    path: 'subscriptions',
+    loadChildren: () => import('./subscriptions/subscriptions.module')
+      .then(m => m.SubscriptionsModule),
+    // canActivate: [ProtectAuthGuard],
+    // canActivateChild: [ProtectAuthGuard]
+  },
 ];
 
 @NgModule({

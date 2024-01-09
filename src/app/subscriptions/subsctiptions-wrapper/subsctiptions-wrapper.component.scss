@@ -1,0 +1,42 @@
+.main-content {
+  height: 100%;
+  width: 100%;
+  margin: 70px auto auto auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+}
+
+.row-heading {
+  width: 25%;
+  text-align: center;
+}
+
+.subscription-list {
+  margin-top: 50px;
+  width: 80%;
+}
+
+.subscription-form {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+.pay-btn {
+  background-color: #FE4081;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.error{
+  color: red;
+}

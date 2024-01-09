@@ -1,0 +1,29 @@
+<div class="main-content">
+  <form [formGroup]="payForm" class="subscription-form">
+    <mat-form-field>
+      <mat-label>Start date</mat-label>
+      <input matInput [matDatepicker]="startDatePicker" formControlName="startDate">
+      <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #startDatePicker></mat-datepicker>
+      <mat-error *ngIf="payForm.get('startDate')?.hasError('required')">
+        Start date is required.
+      </mat-error>
+      <mat-error *ngIf="payForm.get('startDate')?.hasError('startDateError') && !payForm.get('startDate')?.hasError('required')">
+        Start date cannot be before today.
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button class="pay-btn" [disabled]="payForm.invalid" (click)="pay()">Pay Now</button>
+  </form>
+
+  <div class="subscription-list">
+    <div class="user-row">
+      <span class="row-heading">Owner</span>
+      <span class="row-heading">Start date</span>
+      <span class="row-heading">End date</span>
+      <span class="row-heading">Valid</span>
+      <span class="row-heading">Delete subscription</span>
+    </div>
+    <app-subscription *ngFor="let subscription of this.subscriptions" [subscription]="subscription"></app-subscription>
+  </div>
+</div>

@@ -10,18 +10,17 @@ import { AlertService } from "../../services/alert.service";
 })
 export class UserWrapperComponent implements OnInit {
 
-  users: UserDTO[] | undefined
+  users: UserDTO[] | undefined;
 
   constructor(private databaseService: DatabaseService,
               private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.databaseService.getAllUsers().subscribe(res => {
-        this.users = res
-      console.log(this.users)
+        this.users = res;
       },
       () => {
-        this.alertService.showAlert("Unable to load users");
+        this.alertService.showAlert("Unable to load users.");
       })
   }
 
