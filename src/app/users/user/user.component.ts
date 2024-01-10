@@ -26,9 +26,8 @@ export class UserComponent implements OnInit{
       this.hasActiveSubscription = Utils.AdminRole;
     } else {
       this.databaseService.getSubscriptionForAGivenUser(this.user.id!).subscribe(res => {
-        if (res.length == 0) {
+        if (res.length == 0 || this.user.suspended) {
           this.hasActiveSubscription = "No"
-          console.log(1);
         } else {
           res.map(subscription => {
             subscription.start_date = subscription.start_date?.split('-').reverse().join('-');
@@ -64,9 +63,9 @@ export class UserComponent implements OnInit{
     }
     this.databaseService.updateUser(updateParameters).subscribe(res => {
       if (res.suspended) {
-        this.alertService.showAlert(`${res.email} was suspended!`)
+        this.alertService.showAlertWithRefresh(`${res.email} was suspended!`)
       } else {
-        this.alertService.showAlert(`${res.email} was UN-suspended!`)
+        this.alertService.showAlertWithRefresh(`${res.email} was UN-suspended!`)
       }
     })
   }

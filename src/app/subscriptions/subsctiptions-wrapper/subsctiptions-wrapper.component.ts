@@ -103,8 +103,6 @@ export class SubsctiptionsWrapperComponent implements OnInit {
       endDate.setMonth(endDate.getMonth() + 1);
       const formattedStartDate = this.datePipe.transform(startDate, "dd.MM.yyyy");
       const formattedEndDate = this.datePipe.transform(endDate, "dd.MM.yyyy");
-      console.log(formattedStartDate)
-      console.log(formattedEndDate)
 
       if (formattedEndDate && formattedStartDate) {
         const req: Types.createCheckoutSessionParams = {

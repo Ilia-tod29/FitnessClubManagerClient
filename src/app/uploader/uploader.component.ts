@@ -63,7 +63,6 @@ export class UploaderComponent implements OnInit {
   }
 
   onUpload(): void {
-    console.log(this.InventoryName)
     if (this.InventoryName == undefined || this.InventoryName == "") {
       if (this.router.url == `/${RoutesConfig.Inventory}`) {
         this.alertService.showAlert("Inventory name must be filled!")
@@ -108,7 +107,6 @@ export class UploaderComponent implements OnInit {
   }
 
   clearImage() {
-    console.log("clearing")
     this.files = [];
     this.imageName = "";
     this.shouldVisualizeBtns = false;
