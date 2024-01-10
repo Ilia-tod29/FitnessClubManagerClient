@@ -1,6 +1,6 @@
 export class UrlsConfig {
   // The URL for accessing the back end.
-  static readonly API: string = "http://localhost:8081";
+  static readonly API: string = "http://localhost:8080";
 
   // User related endpoints
   static readonly USERS_ENDPOINT: string = `${this.API}/users`;
