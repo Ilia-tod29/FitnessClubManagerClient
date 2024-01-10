@@ -68,12 +68,12 @@ export class UploaderComponent implements OnInit {
         this.alertService.showAlert("Inventory name must be filled!")
         return
       }
-        const galleryItem: createOrUpdateGalleryItem = {
+      const galleryItem: createOrUpdateGalleryItem = {
         image: this.imageName
       }
       this.databaseService.createGalleryItem(galleryItem).subscribe({
         next: res => {
-        this.alertService.showAlertWithRefresh(`Image: ${res.image} created successfully at: ${res.created_at}`)
+        this.alertService.showAlertWithRefresh(`Image: ${res.image} created successfully at: ${res.created_at}`);
       },
       error: err => {
         this.alertService.showAlert(err.statusText);
@@ -85,7 +85,7 @@ export class UploaderComponent implements OnInit {
       }
       this.databaseService.createInventoryItem(inventoryItem).subscribe({
         next: res => {
-          this.alertService.showAlertWithRefresh(`Inventory item: ${res.name} created successfully at: ${res.created_at}`)
+          this.alertService.showAlertWithRefresh(`Inventory item: ${res.name} created successfully at: ${res.created_at}`);
         },
         error: err => {
           this.alertService.showAlert(err.statusText);
@@ -99,11 +99,6 @@ export class UploaderComponent implements OnInit {
       this.onUpload();
       this.clearImage();
     }
-  }
-
-  signOut() {
-    this.authenticationService.signOut();
-    this.router.navigate(['auth'])
   }
 
   clearImage() {

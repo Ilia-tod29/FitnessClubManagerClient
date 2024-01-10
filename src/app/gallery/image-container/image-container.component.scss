@@ -20,47 +20,8 @@
   justify-content: center;
 }
 
-
-.pagination {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-.page {
-  display: flex;
-  justify-content: center;
-  margin-left: 5px;
-  margin-bottom: 10px;
-  width: 30px;
-  height: 30px;
-  border-radius: 5px;
-  background-color: #00364D;
-}
-
-.page a{
-  font-size: 25px;
-  color: white;
-  margin-top: 4px;
-}
-
-.page:hover {
-  cursor: pointer;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-  transform: scale(1.05);
-  background-color: #00141c;
-}
-.page a:hover {
-  text-decoration: none;
-}
 .active {
   background-color: #00141c;
-}
-
-.search {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-  width: 100%;
 }
 
 .drop-zone {
