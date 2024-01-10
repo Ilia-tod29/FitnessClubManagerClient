@@ -16,12 +16,13 @@ export class UserWrapperComponent implements OnInit {
               private alertService: AlertService) { }
 
   ngOnInit(): void {
-    this.databaseService.getAllUsers().subscribe(res => {
+    this.databaseService.getAllUsers().subscribe({
+      next: res => {
         this.users = res;
       },
-      () => {
+      error: () => {
         this.alertService.showAlert("Unable to load users.");
-      })
+      }});
   }
 
 }

@@ -28,11 +28,15 @@ export class UserComponent implements OnInit{
       this.databaseService.getSubscriptionForAGivenUser(this.user.id!).subscribe(res => {
         if (res.length == 0) {
           this.hasActiveSubscription = "No"
+          console.log(1);
         } else {
           res.map(subscription => {
+            subscription.start_date = subscription.start_date?.split('-').reverse().join('-');
+            subscription.end_date = subscription.end_date?.split('-').reverse().join('-');
             const startDate = this.alertService.parseDate(subscription.start_date!);
             const endDate = this.alertService.parseDate(subscription.end_date!);
             const today = new Date();
+            today.setHours(0,0,0,0);
 
             if (startDate != null && endDate != null) {
               if (today >= startDate && today <= endDate) {
@@ -74,12 +78,13 @@ export class UserComponent implements OnInit{
     }
     this.alertService.confirmAlert(`Are you sure you want to delete this user: ${this.user.email}?`).subscribe((confirmed: boolean) => {
       if (confirmed) {
-        this.databaseService.deleteUser(this.user.id!).subscribe(res => {
+        this.databaseService.deleteUser(this.user.id!).subscribe({
+          next: res => {
             this.alertService.showAlertWithRefresh(`User: ${res.email} successfully deleted!`)
           },
-          error => {
+          error: error => {
             this.alertService.showAlert(error.statusText);
-          })
+          }})
       }
     });
   }

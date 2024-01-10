@@ -1,8 +1,12 @@
 <div (mouseenter)="onMouseEnter()"
      (mouseleave)="onMouseLeave()"
+     [class.hover-effect]="(this.shouldShow && !this.isAuthenticatedUserAdmin && this.shouldShow && this.image.name && this.image.name != '') || this.shouldShow && this.isAuthenticatedUserAdmin"
      class="image-wrapper">
-  <mat-icon *ngIf="shouldShow"
+  <mat-icon *ngIf="this.shouldShow && this.isAuthenticatedUserAdmin"
             (click)="deleteImage()"
             class="delete-image">delete</mat-icon>
+  <span *ngIf="this.shouldShow && this.image.name && this.image.name != ''"
+        [class.move-label]="this.isAuthenticatedUserAdmin"
+        class="inventory-item-name">{{this.image.name}}</span>
   <img src="../../../../assets/images/{{this.image.image}}" alt="Unable to load image">
 </div>

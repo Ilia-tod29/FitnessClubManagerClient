@@ -21,12 +21,13 @@ export class ImageContainerComponent implements OnInit{
 
   ngOnInit() {
     this.isAuthenticatedUserAdmin = this.authService.isAuthenticatedUserAdmin();
-    this.databaseService.getAllGalleryItems().subscribe(res => {
+    this.databaseService.getAllGalleryItems().subscribe({
+    next: res => {
       this.mapImages(res);
     },
-    () => {
+    error: () => {
       this.alertService.showAlert("Unable to load images");
-    })
+    }})
   }
 
   mapImages(galleryImages: GalleryItemDTO[]): void {

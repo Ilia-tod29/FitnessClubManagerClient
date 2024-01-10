@@ -23,20 +23,25 @@ export class SubscriptionComponent implements OnInit {
 
   ngOnInit(): void {
     this.isAuthenticatedUserAdmin = this.authService.isAuthenticatedUserAdmin();
+    const payload = this.authService.getPayload();
     const startDate = this.alertService.parseDate(this.subscription.start_date!);
     const endDate = this.alertService.parseDate(this.subscription.end_date!);
     const today = new Date();
     today.setHours(0,0,0,0);
 
-    if (startDate != null && endDate != null) {
-      if (today >= startDate && today <= endDate) {
-        this.subscriptionStatus = "active";
-      }
-      if (today > endDate) {
-        this.subscriptionStatus = "passed"
-      }
-      if (today < startDate) {
-        this.subscriptionStatus = "toBeActive"
+    if (payload.suspend) {
+      this.subscriptionStatus = "suspended";
+    } else {
+      if (startDate != null && endDate != null) {
+        if (today >= startDate && today <= endDate) {
+          this.subscriptionStatus = "active";
+        }
+        if (today > endDate) {
+          this.subscriptionStatus = "passed"
+        }
+        if (today < startDate) {
+          this.subscriptionStatus = "toBeActive"
+        }
       }
     }
 
@@ -44,6 +49,9 @@ export class SubscriptionComponent implements OnInit {
       this.databaseService.getUser(this.subscription.user_id!).subscribe({
         next: res => {
           this.user = res;
+          if (this.user.suspended) {
+            this.subscriptionStatus = "suspended";
+          }
         },
         error: () => {
           this.alertService.showAlert("Subscription's owner not found.");

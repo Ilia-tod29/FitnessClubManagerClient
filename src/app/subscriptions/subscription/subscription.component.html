@@ -8,6 +8,7 @@
     <mat-icon *ngIf="this.subscriptionStatus == 'active'" class="row-heading green-color">done</mat-icon>
     <mat-icon *ngIf="this.subscriptionStatus == 'passed'" class="row-heading red-color">event_busy</mat-icon>
     <mat-icon *ngIf="this.subscriptionStatus == 'toBeActive'" class="row-heading">hourglass_top</mat-icon>
+    <mat-icon *ngIf="this.subscriptionStatus == 'suspended'" class="row-heading red-color">pause</mat-icon>
     <p *ngIf="this.subscriptionStatus == 'unknown'" class="row-heading">{{this.subscriptionStatus}}</p>
     <mat-icon *ngIf="this.isAuthenticatedUserAdmin" (click)="deleteSubscription()" class="row-heading red-color delete">delete</mat-icon>
   </div>

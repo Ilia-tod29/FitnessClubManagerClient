@@ -20,11 +20,12 @@ export class InventoryComponent implements OnInit {
 
   ngOnInit() {
     this.isAuthenticatedUserAdmin = this.authService.isAuthenticatedUserAdmin();
-    this.databaseService.getAllInventoryItems().subscribe(res => {
+    this.databaseService.getAllInventoryItems().subscribe({
+     next: res => {
       this.images = res
     },
-    () => {
+    error: () => {
       this.alertService.showAlert("Unable to load images");
-    })
+    }});
   }
 }

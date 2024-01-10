@@ -51,7 +51,8 @@ export class SubsctiptionsWrapperComponent implements OnInit {
   ngOnInit(): void {
     this.isAuthenticatedUserAdmin = this.authService.isAuthenticatedUserAdmin();
     if (this.isAuthenticatedUserAdmin){
-      this.databaseService.getAllSubscriptions().subscribe(res => {
+      this.databaseService.getAllSubscriptions().subscribe({
+        next: res => {
           res.map(subscription => {
             subscription.start_date = subscription.start_date?.split('-').reverse().join('-');
             subscription.end_date = subscription.end_date?.split('-').reverse().join('-');
@@ -59,12 +60,13 @@ export class SubsctiptionsWrapperComponent implements OnInit {
           })
           this.subscriptions = res;
         },
-        () => {
+        error: () => {
           this.alertService.showAlert("Unable to load subscriptions.");
-        })
+        }})
     } else {
       const authenticatedUserId = localStorage.getItem("userId")!;
-      this.databaseService.getSubscriptionForAGivenUser(+authenticatedUserId).subscribe(res => {
+      this.databaseService.getSubscriptionForAGivenUser(+authenticatedUserId).subscribe({
+        next: res => {
           res.map(subscription => {
               subscription.start_date = subscription.start_date?.split('-').reverse().join('-');
               subscription.end_date = subscription.end_date?.split('-').reverse().join('-');
@@ -72,9 +74,9 @@ export class SubsctiptionsWrapperComponent implements OnInit {
             })
           this.subscriptions = res;
         },
-        () => {
+        error: () => {
           this.alertService.showAlert("Unable to load subscriptions.");
-        })
+        }});
     }
   }
 

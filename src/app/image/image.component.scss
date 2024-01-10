@@ -12,7 +12,7 @@
   justify-content: center;
   position: relative;
 }
-.image-wrapper:hover img{
+.hover-effect:hover img{
   opacity: 0.5;
   transition: 0.5s;
 }
@@ -29,4 +29,28 @@
   text-align: center;
   z-index: 1;
   cursor: pointer
+}
+
+@font-face {
+  font-family: simplificaFontLocal;
+  src: url(../../fonts/simplifica.ttf);
+}
+
+.inventory-item-name {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: simplificaFontLocal;
+  font-size: 30px;
+  font-weight: bold;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.65);
+  padding: 5px 3px 3px 3px;
+  border-radius: 5px;
+
+}
+
+.move-label {
+ top: 70%
 }

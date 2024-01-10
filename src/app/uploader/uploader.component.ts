@@ -72,23 +72,25 @@ export class UploaderComponent implements OnInit {
         const galleryItem: createOrUpdateGalleryItem = {
         image: this.imageName
       }
-      this.databaseService.createGalleryItem(galleryItem).subscribe(res => {
+      this.databaseService.createGalleryItem(galleryItem).subscribe({
+        next: res => {
         this.alertService.showAlertWithRefresh(`Image: ${res.image} created successfully at: ${res.created_at}`)
       },
-      error => {
-        this.alertService.showAlert(error.statusText);
-      })
+      error: err => {
+        this.alertService.showAlert(err.statusText);
+      }});
     } else {
       const inventoryItem: createOrUpdateInventoryItem = {
         name: this.InventoryName,
         image: this.imageName,
       }
-      this.databaseService.createInventoryItem(inventoryItem).subscribe(res => {
+      this.databaseService.createInventoryItem(inventoryItem).subscribe({
+        next: res => {
           this.alertService.showAlertWithRefresh(`Inventory item: ${res.name} created successfully at: ${res.created_at}`)
         },
-        error => {
-          this.alertService.showAlert(error.statusText);
-        })
+        error: err => {
+          this.alertService.showAlert(err.statusText);
+        }});
     }
   }
 
