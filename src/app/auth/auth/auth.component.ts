@@ -34,12 +34,17 @@ export class AuthComponent implements OnInit {
   }
 
   submitSignUp(): void {
+    if (!AuthComponent.isValidEmail(this.signUpObj.email)) {
+      this.errorSignUpEl!.nativeElement.textContent = "Invalid email";
+      return;
+    }
+
     if (this.signUpObj.password !== this.signUpObj.repeatPassword) {
       this.errorSignUpEl!.nativeElement.textContent = "Passwords do not match";
       return;
     }
 
-    if (this.signUpObj.password.length < 8 || !this.hasCapitalLetter(this.signUpObj.password)) {
+    if (this.signUpObj.password.length < 8 || !AuthComponent.hasCapitalLetter(this.signUpObj.password)) {
       this.errorSignUpEl!.nativeElement.textContent = "Password must have at least 8 symbols and a capital letter";
       return;
     }
@@ -50,16 +55,28 @@ export class AuthComponent implements OnInit {
     }).subscribe({
       next: (response: any) => {
         this.authenticationService.validate(response);
+        window.location.reload();
         this.router.navigate(['home'])
       },
-      error: error => {
+      error: err => {
         this.isLoading = false;
-        this.errorSignUpEl!.nativeElement.textContent = error.message.slice(10);
+        if (err.status == 400) {
+          this.errorSignUpEl!.nativeElement.textContent = "Registration was unsuccessful";
+        }
       }
     });
   }
 
   submitSignIn(): void {
+    if (!AuthComponent.isValidEmail(this.signInObj.email)) {
+      this.errorSignInEl!.nativeElement.textContent = "Invalid email";
+      return;
+    }
+    if (this.signInObj.password.length < 8 || !AuthComponent.hasCapitalLetter(this.signInObj.password)) {
+      this.errorSignInEl!.nativeElement.textContent = "Password must have at least 8 symbols and a capital letter";
+      return;
+    }
+
     this.isLoading = true;
 
     this.authenticationService.signIn({
@@ -68,19 +85,34 @@ export class AuthComponent implements OnInit {
     }).subscribe({
       next: (response) => {
         this.authenticationService.validate(response);
+        window.location.reload();
         this.router.navigate(['home']);
       },
-      error: error => {
+      error: err => {
         this.isLoading = false;
-        this.errorSignInEl!.nativeElement.textContent = error.message.slice(10);
+        if (err.status == 400) {
+          this.errorSignInEl!.nativeElement.textContent = "Signing in unsuccessful";
+        }
+        if (err.status == 401) {
+          this.errorSignInEl!.nativeElement.textContent = "Wrong email or password";
+        }
+        if (err.status == 404) {
+          this.errorSignInEl!.nativeElement.textContent = "User with this email do not exist";
+
+        }
       }
     });
   }
 
 
-  private hasCapitalLetter(input: string): boolean {
+  private static hasCapitalLetter(input: string): boolean {
     const capitalLetterRegex = /[A-Z]/;
     return capitalLetterRegex.test(input);
+  }
+
+  private static isValidEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   }
 
 }

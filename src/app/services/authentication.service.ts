@@ -65,6 +65,9 @@ export class AuthenticationService {
   }
 
   isAuthenticatedUserAdmin():boolean {
+    if (!this.isAuthenticated()){
+      return false;
+    }
     const payload = this.getPayload();
     if (payload) {
       return payload.role == Utils.AdminRole;
