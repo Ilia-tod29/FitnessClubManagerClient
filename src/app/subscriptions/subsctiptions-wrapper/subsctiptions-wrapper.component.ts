@@ -1,30 +1,46 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from "../../services/database.service";
 import { AlertService } from "../../services/alert.service";
-import { Utils } from "../../models/utils";
 import { SubscriptionDTO } from "../../models/subscriptionDTO";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PaymentService } from "../../services/payment.service";
 import { DatePipe } from "@angular/common";
 import * as Types from "../../models/types";
+import { MAT_DATE_FORMATS, DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { AuthenticationService } from "../../services/authentication.service";
 
-
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'MM/DD/YYYY',
+  },
+  display: {
+    dateInput: 'DD-MM-YYYY',
+    monthYearLabel: 'MM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MM YYYY',
+  },
+};
 @Component({
   selector: 'app-subsctiptions-wrapper',
   templateUrl: './subsctiptions-wrapper.component.html',
   styleUrls: ['./subsctiptions-wrapper.component.scss'],
-  providers: [DatePipe],
+  providers: [
+    DatePipe,
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS] },
+  ],
 })
 export class SubsctiptionsWrapperComponent implements OnInit {
 
   subscriptions: SubscriptionDTO[] | undefined;
   payForm: FormGroup;
-  authenticatedUserRole = "";
-  adminRole = Utils.AdminRole;
+  isAuthenticatedUserAdmin = false;
 
   constructor(private databaseService: DatabaseService,
               private alertService: AlertService,
               private paymentService: PaymentService,
+              private authService: AuthenticationService,
               private fb: FormBuilder,
               private datePipe: DatePipe) {
     this.payForm = this.fb.group({
@@ -33,9 +49,14 @@ export class SubsctiptionsWrapperComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authenticatedUserRole = localStorage.getItem("userRole")!;
-    if (this.authenticatedUserRole == Utils.AdminRole){
+    this.isAuthenticatedUserAdmin = this.authService.isAuthenticatedUserAdmin();
+    if (this.isAuthenticatedUserAdmin){
       this.databaseService.getAllSubscriptions().subscribe(res => {
+          res.map(subscription => {
+            subscription.start_date = subscription.start_date?.split('-').reverse().join('-');
+            subscription.end_date = subscription.end_date?.split('-').reverse().join('-');
+            return subscription;
+          })
           this.subscriptions = res;
         },
         () => {
@@ -44,6 +65,11 @@ export class SubsctiptionsWrapperComponent implements OnInit {
     } else {
       const authenticatedUserId = localStorage.getItem("userId")!;
       this.databaseService.getSubscriptionForAGivenUser(+authenticatedUserId).subscribe(res => {
+          res.map(subscription => {
+              subscription.start_date = subscription.start_date?.split('-').reverse().join('-');
+              subscription.end_date = subscription.end_date?.split('-').reverse().join('-');
+              return subscription;
+            })
           this.subscriptions = res;
         },
         () => {
@@ -55,10 +81,9 @@ export class SubsctiptionsWrapperComponent implements OnInit {
   startDateValidator(control: any): { [key: string]: boolean } | null {
     const selectedDate = new Date(control.value);
     const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(today.getDate() - 1);
+    today.setHours(0,0,0,0);
 
-    if (selectedDate < yesterday) {
+    if (selectedDate < today) {
       return { 'startDateError': true };
     }
 
@@ -66,7 +91,7 @@ export class SubsctiptionsWrapperComponent implements OnInit {
   }
 
   pay() {
-    if (this.authenticatedUserRole == Utils.AdminRole) {
+    if (this.isAuthenticatedUserAdmin) {
       this.alertService.showAlert("Admins cannot have subscriptions.");
       return
     }
@@ -76,6 +101,8 @@ export class SubsctiptionsWrapperComponent implements OnInit {
       endDate.setMonth(endDate.getMonth() + 1);
       const formattedStartDate = this.datePipe.transform(startDate, "dd.MM.yyyy");
       const formattedEndDate = this.datePipe.transform(endDate, "dd.MM.yyyy");
+      console.log(formattedStartDate)
+      console.log(formattedEndDate)
 
       if (formattedEndDate && formattedStartDate) {
         const req: Types.createCheckoutSessionParams = {

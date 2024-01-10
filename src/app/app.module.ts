@@ -11,6 +11,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClientModule} from "@angular/common/http";
+import { MatMenuModule } from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { HttpClientModule} from "@angular/common/http";
     MatToolbarModule,
     MatButtonModule,
     MatSnackBarModule,
-    HttpClientModule
+    HttpClientModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

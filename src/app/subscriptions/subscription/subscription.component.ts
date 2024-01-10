@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UserDTO } from "../../models/userDTO";
 import { SubscriptionDTO } from "../../models/subscriptionDTO";
-import { Utils } from "../../models/utils";
 import { DatabaseService } from "../../services/database.service";
 import { AlertService } from "../../services/alert.service";
+import { AuthenticationService } from "../../services/authentication.service";
 
 @Component({
   selector: 'app-subscription',
@@ -14,42 +14,50 @@ export class SubscriptionComponent implements OnInit {
 
   @Input() subscription!: SubscriptionDTO;
   user: UserDTO | undefined;
-  isValidSubscription = false;
-  authenticatedUserRole = "";
-  adminRole = Utils.AdminRole;
+  subscriptionStatus = "unknown";
+  isAuthenticatedUserAdmin = false;
 
   constructor(private databaseService: DatabaseService,
+              private authService: AuthenticationService,
               private alertService: AlertService) { }
 
   ngOnInit(): void {
-    this.authenticatedUserRole = localStorage.getItem("userRole")!;
+    this.isAuthenticatedUserAdmin = this.authService.isAuthenticatedUserAdmin();
     const startDate = this.alertService.parseDate(this.subscription.start_date!);
     const endDate = this.alertService.parseDate(this.subscription.end_date!);
     const today = new Date();
+    today.setHours(0,0,0,0);
 
-    if (startDate != null && endDate != null && (today >= startDate && today <= endDate)) {
-      this.isValidSubscription = true;
-      console.log(this.isValidSubscription)
+    if (startDate != null && endDate != null) {
+      if (today >= startDate && today <= endDate) {
+        this.subscriptionStatus = "active";
+      }
+      if (today > endDate) {
+        this.subscriptionStatus = "passed"
+      }
+      if (today < startDate) {
+        this.subscriptionStatus = "toBeActive"
+      }
     }
 
-    if (this.authenticatedUserRole == Utils.AdminRole){
-      this.databaseService.getUser(this.subscription.user_id!).subscribe(res => {
+    if (this.isAuthenticatedUserAdmin){
+      this.databaseService.getUser(this.subscription.user_id!).subscribe({
+        next: res => {
           this.user = res;
         },
-        () => {
+        error: () => {
           this.alertService.showAlert("Subscription's owner not found.");
           this.user = new UserDTO(-1, "UserNotFound");
-        })
+        }});
     } else {
-      const authenticatedUserID = localStorage.getItem("userRole")!;
-      const authenticatedUserEmail = localStorage.getItem("currentUser")!;
-      this.user = new UserDTO(+authenticatedUserID, authenticatedUserEmail, this.authenticatedUserRole);
+      const payload = this.authService.getPayload();
+      this.user = new UserDTO(+payload.id, payload.email, payload.role);
     }
 
   }
 
   deleteSubscription(): void {
-    if (this.authenticatedUserRole != Utils.AdminRole) {
+    if (this.isAuthenticatedUserAdmin) {
       this.alertService.showAlert("Users cannot delete subscriptions!");
       return;
     }

@@ -5,8 +5,10 @@
     <span class="row-heading">{{ this.user?.email }}</span>
     <span class="row-heading">{{ this.subscription.start_date }}</span>
     <span class="row-heading">{{ this.subscription.end_date }}</span>
-    <mat-icon *ngIf="this.isValidSubscription" class="row-heading green-color">done</mat-icon>
-    <mat-icon *ngIf="!this.isValidSubscription" class="row-heading red-color">close</mat-icon>
-    <mat-icon *ngIf="this.authenticatedUserRole == this.adminRole" (click)="deleteSubscription()" class="row-heading red-color delete">delete</mat-icon>
+    <mat-icon *ngIf="this.subscriptionStatus == 'active'" class="row-heading green-color">done</mat-icon>
+    <mat-icon *ngIf="this.subscriptionStatus == 'passed'" class="row-heading red-color">event_busy</mat-icon>
+    <mat-icon *ngIf="this.subscriptionStatus == 'toBeActive'" class="row-heading">hourglass_top</mat-icon>
+    <p *ngIf="this.subscriptionStatus == 'unknown'" class="row-heading">{{this.subscriptionStatus}}</p>
+    <mat-icon *ngIf="this.isAuthenticatedUserAdmin" (click)="deleteSubscription()" class="row-heading red-color delete">delete</mat-icon>
   </div>
 </div>

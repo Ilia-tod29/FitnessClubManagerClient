@@ -2,7 +2,7 @@
   <div class="gallery">
     <label class="section-heading">Image Gallery</label>
 
-    <div class="drop-zone">
+    <div *ngIf="this.isAuthenticatedUserAdmin" class="drop-zone">
       <app-uploader></app-uploader>
     </div>
 

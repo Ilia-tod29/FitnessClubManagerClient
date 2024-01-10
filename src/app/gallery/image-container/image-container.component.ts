@@ -3,6 +3,7 @@ import { DatabaseService } from "../../services/database.service";
 import { GalleryItemDTO } from "../../models/galleryItemDTO";
 import { InventoryItemDTO } from "../../models/inventoryItemDTO";
 import { AlertService } from "../../services/alert.service";
+import { AuthenticationService } from "../../services/authentication.service";
 
 
 @Component({
@@ -11,19 +12,15 @@ import { AlertService } from "../../services/alert.service";
   styleUrls: ['./image-container.component.scss']
 })
 export class ImageContainerComponent implements OnInit{
-  // images$ = this.storageService.allItems
-  //   .pipe(
-  //     map((images) => {
-  //       console.log(4)
-  //       return images;
-  //     })
-  //   );
-
   images: InventoryItemDTO[] = [];
+  isAuthenticatedUserAdmin = false;
+
   constructor(private databaseService: DatabaseService,
+              private authService: AuthenticationService,
               private alertService: AlertService) {}
 
   ngOnInit() {
+    this.isAuthenticatedUserAdmin = this.authService.isAuthenticatedUserAdmin();
     this.databaseService.getAllGalleryItems().subscribe(res => {
       this.mapImages(res);
     },

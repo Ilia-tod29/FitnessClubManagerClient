@@ -2,7 +2,7 @@
   <div class="gallery">
     <label class="section-heading">Inventory</label>
 
-    <div class="drop-zone">
+    <div *ngIf="this.isAuthenticatedUserAdmin" class="drop-zone">
       <div class="input">
         <input type="email" id="inventory-item" class="input-field" name="email" placeholder=" " required   [(ngModel)]="inventoryItemName"/>
         <label class="input-label" for="inventory-item">Enter the inventory item name:</label>

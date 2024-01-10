@@ -62,7 +62,16 @@ a{
   color: white;
   text-decoration: none;
   padding: 8px 12px;
-  position: relative;
+  //position: relative;
+}
+
+.authenticator {
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+.profile {
+  margin-bottom: 5px;
 }
 
 .nav-link::after {
@@ -79,4 +88,8 @@ a{
 .nav-link:hover::after {
   left: 0;
   width: 100%;
+}
+
+mat-slide-toggle {
+  margin-left: 15px;
 }

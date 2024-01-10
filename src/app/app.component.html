@@ -7,9 +7,19 @@
       <!-- Right side links with underline animation -->
       <span class="nav-links">
         <a routerLink="/gallery" mat-button class="nav-link">Gallery</a>
-        <a routerLink="/users" mat-button class="nav-link">Users</a>
-        <a routerLink="/subscriptions" mat-button class="nav-link">Subscriptions</a>
         <a routerLink="/inventory" mat-button class="nav-link">Inventory</a>
+        <a routerLink="/subscriptions" *ngIf="this.isAuthenticated" mat-button class="nav-link">Subscriptions</a>
+        <a routerLink="/users" *ngIf="this.isAuthenticated && this.isAuthenticatedUserAdmin" mat-button class="nav-link">Users</a>
+        <a routerLink="/auth" *ngIf="!isAuthenticated" mat-button class="nav-link authenticator">Sign up/Sign in</a>
+        <a *ngIf="isAuthenticated" mat-button [matMenuTriggerFor]="userMenu" class="nav-link authenticator">
+          <mat-icon class="profile">person</mat-icon>
+          {{ currentUser }}
+          <mat-icon>arrow_drop_down</mat-icon>
+        </a>
+        <mat-menu #userMenu="matMenu" class="dropdown-menu">
+          <button mat-menu-item (click)="signOut()">Sign Out</button>
+        </mat-menu>
+
         <mat-slide-toggle [(ngModel)]="isDarkTheme"
                           (click)="toddleTheme()">
           <mat-icon *ngIf="isDarkTheme">nights_stay</mat-icon>

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { from, Observable, of } from "rxjs";
+import { from, Observable } from "rxjs";
 import { authParams } from '../models/types'
 import { HttpClient } from "@angular/common/http";
 import { UrlsConfig } from "../conficuration/url-config";
+import { Utils } from "../models/utils";
 
 
 @Injectable({
@@ -42,5 +43,32 @@ export class AuthenticationService {
     localStorage.setItem('currentUser', "");
     localStorage.setItem('currentUsersID', "");
     localStorage.setItem('accessToken', "");
+  }
+
+  getPayload(): any {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      return JSON.parse(atob(token.split('.')[1]));
+    }
+    return;
+  }
+
+  isAuthenticated(): boolean {
+    const payload = this.getPayload();
+    if (payload) {
+      const expirationDate = new Date(payload.expires_at);
+      const today = new Date();
+
+      return expirationDate >= today;
+    }
+    return false;
+  }
+
+  isAuthenticatedUserAdmin():boolean {
+    const payload = this.getPayload();
+    if (payload) {
+      return payload.role == Utils.AdminRole;
+    }
+    return false;
   }
 }

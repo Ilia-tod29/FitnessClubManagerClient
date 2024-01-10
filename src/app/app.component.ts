@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {Router} from "@angular/router";
+import { AuthenticationService } from "./services/authentication.service";
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,23 @@ import {Router} from "@angular/router";
 export class AppComponent {
   title = 'FitnessClubManagerClient';
   isDarkTheme: boolean;
-  constructor(private router: Router) {
+  isAuthenticated = false;
+  isAuthenticatedUserAdmin = false;
+  currentUser = "";
+
+  constructor(private router: Router,
+              private authService: AuthenticationService) {
+    this.isAuthenticated = this.authService.isAuthenticated()
+    if (this.isAuthenticated) {
+      this.currentUser = this.authService.getPayload().email;
+      this.isAuthenticatedUserAdmin = this.authService.isAuthenticatedUserAdmin();
+    }
+    window.addEventListener('storage', () => {
+      this.isAuthenticated = this.authService.isAuthenticated()
+      if (this.isAuthenticated) {
+        this.currentUser = this.authService.getPayload().email;
+      }
+    });
     const theme = localStorage.getItem('theme');
     if(theme){
       this.isDarkTheme = theme == 'dark';
@@ -26,4 +43,10 @@ export class AppComponent {
       localStorage.setItem('theme', 'light')
     }
   }
+
+  signOut() {
+    localStorage.clear();
+    window.location.reload();
+  }
+
 }
