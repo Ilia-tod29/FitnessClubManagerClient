@@ -7,7 +7,7 @@ The project itself was created using [Angular CLI](https://github.com/angular/an
 ## How to run
 
 - Make sure you have the back-end up and running. If you don't know how to run it, follow the [instructions](https://github.com/Ilia-tod29/FitnessClubManagerAPI/blob/main/README.md)
-
+- Run 'npm install', while located at the root of this project.
 - Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 
 ## How to use
