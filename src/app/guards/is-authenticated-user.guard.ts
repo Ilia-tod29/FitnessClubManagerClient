@@ -14,7 +14,7 @@ export class IsAuthenticatedUserGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     let isAuthenticated = this.authService.isAuthenticated();
     if (!isAuthenticated) {
-      this.router.navigate(['/auth']);
+      this.router.navigate(['/home']);
     }
     return isAuthenticated;
   }

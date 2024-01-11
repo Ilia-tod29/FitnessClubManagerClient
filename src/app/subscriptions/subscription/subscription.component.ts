@@ -65,7 +65,7 @@ export class SubscriptionComponent implements OnInit {
   }
 
   deleteSubscription(): void {
-    if (this.isAuthenticatedUserAdmin) {
+    if (!this.isAuthenticatedUserAdmin) {
       this.alertService.showAlert("Users cannot delete subscriptions!");
       return;
     }

@@ -38,7 +38,7 @@ const routes: Routes = [
       .then(m => m.SubscriptionsModule),
     canActivate: [IsAuthenticatedUserGuard],
   },
-  { path: '**', redirectTo: '/auth' },
+  { path: '**', redirectTo: '/home' },
 ];
 
 @NgModule({
